@@ -6,11 +6,12 @@ import Admission from "../Pages/Admission/Admission";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Error from "../Pages/Error/Error";
+import Profile from "../Pages/Profile/Profile";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element:<Main></Main>,
+        element: <Main></Main>,
         children: [
             {
                 path: "/",
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             {
                 path: "admission",
                 element: <Admission></Admission>
+            },
+            {
+                path: "profile",
+                element: <Profile></Profile>
             }
         ]
     },
