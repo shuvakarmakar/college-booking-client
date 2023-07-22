@@ -5,6 +5,7 @@ import Colleges from "../Pages/Colleges/Colleges";
 import Admission from "../Pages/Admission/Admission";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import Error from "../Pages/Error/Error";
 
 export const router = createBrowserRouter([
     {
@@ -32,5 +33,9 @@ export const router = createBrowserRouter([
                 element: <Admission></Admission>
             }
         ]
+    },
+    {
+        path: "*",
+        element: <Error></Error>
     }
 ])
