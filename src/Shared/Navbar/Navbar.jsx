@@ -4,7 +4,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
 
-    const { user, logout } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const navItems = (
@@ -18,7 +18,7 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            await logout();
+            await logOut();
             navigate('/login');
         } catch (error) {
             console.log(error);
@@ -43,7 +43,12 @@ const Navbar = () => {
                 </ul>
             </div>
             {user ? <div className="navbar-end">
-                <span className="text-gray-500 mr-2">Welcome</span>
+                <li className="relative inline-block">
+                    <button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out mr-2">
+                        <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="" />
+                    </button>
+                </li>
+                <span className="text-slate-900 mr-2">Welcome, {user.displayName}</span>
                 <button onClick={handleLogout} className="btn btn-neutral">Logout</button>
             </div>
                 : <div className="navbar-end">
