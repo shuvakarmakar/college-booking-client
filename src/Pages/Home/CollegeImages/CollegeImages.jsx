@@ -9,7 +9,7 @@ const CollegeImages = () => {
     const images = [img1, img2, img3, img4, img5, img6];
     return (
         <div className="container mx-auto py-8" data-aos="flip-down">
-            <h2 className="text-4xl text-center font-bold mb-4">Gallery</h2>
+            <h2 className="text-3xl font-semibold mb-6 text-center">Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {images.map((image, index) => (
                     <div key={index} className="relative">

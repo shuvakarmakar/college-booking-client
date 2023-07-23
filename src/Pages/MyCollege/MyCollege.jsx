@@ -35,7 +35,7 @@ const MyCollege = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:5000/colleges/${college._id}/reviews`, {
+            const response = await fetch(`http://localhost:5000/colleges/${college._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -105,9 +105,11 @@ const MyCollege = () => {
                             type="button"
                             onClick={handleReviewSubmit}
                             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                            disabled={!review || rating === 0}
                         >
                             Submit Review
                         </button>
+
                     </div>
                 ) : (
                     <div>No college data found for the user.</div>

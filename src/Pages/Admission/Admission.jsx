@@ -2,9 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-const Admission = () => {
+const img_hosting_token = import.meta.env.VITE_Image_Upload_Token;
 
+const Admission = () => {
     const { user } = useContext(AuthContext);
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
     const [collegesData, setCollegesData] = useState([]);
     const [selectedCollege, setSelectedCollege] = useState(null);
@@ -30,18 +32,24 @@ const Admission = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCandidateData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        const { name, value, files } = e.target;
+        if (files) {
+            setCandidateData((prevData) => ({
+                ...prevData,
+                image: files[0],
+            }));
+        } else {
+            setCandidateData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!user) {
-            // User is not signed in, display a prompt to sign in
             Swal.fire({
                 icon: "info",
                 title: "Sign In Required",
@@ -50,64 +58,98 @@ const Admission = () => {
             });
             return;
         }
-        
-        const {
-            candidateName,
-            subject,
-            candidateEmail,
-            candidatePhone,
-            address,
-            dateOfBirth,
-            image,
-        } = candidateData;
 
+        // Upload the image to imgBB
         try {
-            const response = await fetch("http://localhost:5000/admission", {
+            const formData = new FormData();
+            formData.append("image", candidateData.image);
+
+            const response = await fetch(img_hosting_url, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    college: selectedCollege.collegeName,
+                body: formData,
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.success) {
+                // Get the uploaded image URL from the response data
+                const imageUrl = responseData.data.display_url;
+
+                // Submit the admission data along with the uploaded image URL
+                const {
                     candidateName,
                     subject,
                     candidateEmail,
                     candidatePhone,
                     address,
                     dateOfBirth,
-                    image,
-                }),
-            });
+                } = candidateData;
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Data stored successfully:", data);
-                setCandidateData({
-                    candidateName: "",
-                    subject: "",
-                    candidateEmail: "",
-                    candidatePhone: "",
-                    address: "",
-                    dateOfBirth: "",
-                    image: "",
-                });
-                setSelectedCollege(null);
+                try {
+                    const response = await fetch("http://localhost:5000/admission", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            college: selectedCollege.collegeName,
+                            candidateName,
+                            subject,
+                            candidateEmail,
+                            candidatePhone,
+                            address,
+                            dateOfBirth,
+                            image: imageUrl, // Use the uploaded image URL here
+                        }),
+                    });
+
+                    if (response.ok) {
+                        setCandidateData({
+                            candidateName: "",
+                            subject: "",
+                            candidateEmail: "",
+                            candidatePhone: "",
+                            address: "",
+                            dateOfBirth: "",
+                            image: "",
+                        });
+                        setSelectedCollege(null);
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success",
+                            text: "Admission data has been submitted successfully!",
+                            confirmButtonText: "OK",
+                        });
+                    } else {
+                        console.error("Error storing data:", response.status);
+                    }
+                } catch (error) {
+                    console.error("Error storing data:", error);
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "An error occurred while submitting admission data.",
+                        confirmButtonText: "OK",
+                    });
+                }
+            } else {
+                console.error("Error uploading image:", responseData.error.message);
+
                 Swal.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Admission data has been submitted successfully!",
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while uploading the image.",
                     confirmButtonText: "OK",
                 });
-            } else {
-                console.error("Error storing data:", response.status);
             }
         } catch (error) {
-            console.error("Error storing data:", error);
+            console.error("Error uploading image:", error);
 
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "An error occurred while submitting admission data.",
+                text: "An error occurred while uploading the image.",
                 confirmButtonText: "OK",
             });
         }
