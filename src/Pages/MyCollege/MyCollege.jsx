@@ -12,7 +12,7 @@ const MyCollege = () => {
 
     useEffect(() => {
         if (user && user.email) {
-            fetch(`http://localhost:5000/colleges/${user.email}`)
+            fetch(`https://college-booking-server-blush.vercel.app/colleges/${user.email}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setCollege(data);
@@ -35,7 +35,7 @@ const MyCollege = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:5000/colleges/${college._id}`, {
+            const response = await fetch(`https://college-booking-server-blush.vercel.app/colleges/${college._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

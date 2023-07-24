@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
             {
                 path: "college-details/:id",
                 element: <CollegeDetails></CollegeDetails>,
-                // loader: ({ params }) => fetch(`http://localhost:5000/college-details/${params.id}`)
+                // loader: ({ params }) => fetch(`https://college-booking-server-blush.vercel.app/college-details/${params.id}`)
             }
         ]
     },

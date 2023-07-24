@@ -21,7 +21,7 @@ const Admission = () => {
     });
 
     useEffect(() => {
-        fetch("http://localhost:5000/colleges")
+        fetch("https://college-booking-server-blush.vercel.app/colleges")
             .then((response) => response.json())
             .then((data) => {
                 setCollegesData(data);
@@ -84,7 +84,7 @@ const Admission = () => {
                 } = candidateData;
 
                 try {
-                    const response = await fetch("http://localhost:5000/admission", {
+                    const response = await fetch("https://college-booking-server-blush.vercel.app/admission", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

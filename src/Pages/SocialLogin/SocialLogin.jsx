@@ -21,7 +21,7 @@ const SocialLogin = () => {
                 console.log(loggedInUser);
                 const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, image: loggedInUser.photoURL }
 
-                fetch('http://localhost:5000/user', {
+                fetch('https://college-booking-server-blush.vercel.app/user', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

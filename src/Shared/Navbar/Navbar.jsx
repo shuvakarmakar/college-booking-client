@@ -10,7 +10,7 @@ const Navbar = () => {
     useEffect(() => {
         if (user) {
             // Fetch the latest user data from the backend API
-            fetch(`http://localhost:5000/api/profile?email=${user.email}`)
+            fetch(`https://college-booking-server-blush.vercel.app/api/profile?email=${user.email}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setUserData(data);

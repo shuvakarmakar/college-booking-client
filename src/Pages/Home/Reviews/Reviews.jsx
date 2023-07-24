@@ -6,7 +6,7 @@ const Reviews = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/admissions-with-reviews")
+        fetch("https://college-booking-server-blush.vercel.app/admissions-with-reviews")
             .then((response) => response.json())
             .then((data) => {
                 setReviews(data);

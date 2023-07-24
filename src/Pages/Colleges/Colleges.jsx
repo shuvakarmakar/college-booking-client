@@ -6,7 +6,7 @@ const Colleges = () => {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch("http://localhost:5000/colleges")
+        fetch("https://college-booking-server-blush.vercel.app/colleges")
             .then((response) => response.json())
             .then((data) => {
                 setCollegesData(data);

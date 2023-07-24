@@ -15,7 +15,7 @@ const Profile = () => {
     useEffect(() => {
         if (!user) return;
 
-        fetch(`http://localhost:5000/api/profile?email=${user.email}`)
+        fetch(`https://college-booking-server-blush.vercel.app/api/profile?email=${user.email}`)
             .then((response) => response.json())
             .then((data) => {
                 setProfileData(data);
@@ -36,7 +36,7 @@ const Profile = () => {
     };
 
     const handleSaveClick = () => {
-        fetch(`http://localhost:5000/api/user?email=${user.email}`, {
+        fetch(`https://college-booking-server-blush.vercel.app/api/user?email=${user.email}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const Profile = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("User profile updated:", data);
-                fetch(`http://localhost:5000/api/profile?email=${formData.email}`)
+                fetch(`https://college-booking-server-blush.vercel.app/api/profile?email=${formData.email}`)
                     .then((response) => response.json())
                     .then((data) => {
                         setProfileData(data);
@@ -72,7 +72,7 @@ const Profile = () => {
             });
 
         // Update user profile data in the backend API
-        fetch(`http://localhost:5000/api/admission?email=${user.email}`, {
+        fetch(`https://college-booking-server-blush.vercel.app/api/admission?email=${user.email}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const Profile = () => {
             .then((data) => {
                 console.log("Admission data updated:", data);
                 // Fetch the updated profile data after saving changes
-                fetch(`http://localhost:5000/api/profile?email=${formData.email}`)
+                fetch(`https://college-booking-server-blush.vercel.app/api/profile?email=${formData.email}`)
                     .then((response) => response.json())
                     .then((data) => {
                         setProfileData(data);
