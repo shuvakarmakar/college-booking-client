@@ -1,13 +1,14 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
 
-    const { signIn, signInWithGoogle } = useContext(AuthContext);
+    const { signIn, signInWithGoogle, resetPassword } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const emailRef = useRef();
 
     const from = location.state?.from?.pathname || '/';
 
@@ -17,7 +18,7 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password);
+        // console.log(email, password);
 
         // SignIn Call
         signIn(email, password)
@@ -44,6 +45,22 @@ const Login = () => {
             });
     };
 
+    const handleResetPassword = () => {
+        const email = emailRef.current.value;
+        if (!email) {
+            alert('Please Provide Email First to Reset Password');
+            return;
+        }
+        resetPassword(email)
+            .then(() => {
+                alert('Please Check Your Email');
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -59,7 +76,7 @@ const Login = () => {
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" name='email' placeholder="email" className="input input-bordered" />
+                                <input type="text" name='email' ref={emailRef} placeholder="email" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -67,7 +84,7 @@ const Login = () => {
                                 </label>
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" />
                                 <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    <p><small>Forgot password? Please <button onClick={handleResetPassword} className=" btn-link"> Reset Password</button> </small></p>
                                 </label>
                             </div>
                             <div className="form-control mt-6">
