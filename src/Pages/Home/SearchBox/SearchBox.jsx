@@ -33,7 +33,7 @@ const SearchBox = () => {
             placeholder="Search college name..."
             value={searchQuery}
             onChange={handleInputChange}
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            className="appearance-none bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-none"
           />
           <button
             type="submit"
