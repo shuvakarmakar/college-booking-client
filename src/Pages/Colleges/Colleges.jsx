@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Colleges = () => {
     const [collegesData, setCollegesData] = useState([]);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        // Fetch data from the backend API
         fetch("http://localhost:5000/colleges")
             .then((response) => response.json())
             .then((data) => {
@@ -31,12 +32,14 @@ const Colleges = () => {
                         <p className="text-gray-600 mb-2">College Rating: {college.collegeRating}</p>
                         <p className="text-gray-600 mb-4">Admission Date: {college.admissionDate}</p>
                         <p className="text-gray-600 mb-4">Number of Research: {college.researchHistory.length}</p>
-                        <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                            onClick={() => toggleDetails(college)}
-                        >
-                            {college.showDetails ? "Hide Details" : "Show Details"}
-                        </button>
+                        {user && (
+                            <button
+                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                                onClick={() => toggleDetails(college)}
+                            >
+                                {college.showDetails ? "Hide Details" : "Show Details"}
+                            </button>
+                        )}
                         {college.showDetails && (
                             <div className="mt-4">
                                 <h3 className="font-bold mb-2">Events:</h3>

@@ -16,7 +16,7 @@ const ResearchPaper = () => {
 
     return (
         <div className="max-w-3xl mx-auto mt-4">
-            <h2 className="text-3xl font-semibold mb-4 text-center">Recommended Research Papers</h2>
+            <h2 className="text-3xl font-semibold my-8 text-center text-white">Recommended Research Papers</h2>
             <div className="bg-white rounded-lg shadow-md">
                 <ul className="divide-y divide-gray-200">
                     {researchPapers.map((paper, index) => (

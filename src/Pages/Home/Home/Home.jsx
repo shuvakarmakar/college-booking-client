@@ -6,7 +6,7 @@ import SearchBox from "../SearchBox/SearchBox";
 
 const Home = () => {
     return (
-        <div>
+        <div className="bg-gradient-to-b from-gray-800 via-gray-900 to-black overflow-y-auto">
             <SearchBox></SearchBox>
             <CollegeCards></CollegeCards>
             <CollegeImages></CollegeImages>

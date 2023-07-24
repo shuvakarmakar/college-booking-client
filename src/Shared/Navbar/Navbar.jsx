@@ -1,15 +1,29 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
-
     const { user, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            // Fetch the latest user data from the backend API
+            fetch(`http://localhost:5000/api/profile?email=${user.email}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setUserData(data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user data:", error);
+                });
+        }
+    }, [user]);
 
     const navItems = (
         <>
-            <li><Link to="/">Home</Link></li>
+            <li className="text-black"><Link to="/">Home</Link></li>
             <li><Link to="/colleges">Colleges</Link></li>
             <li><Link to="/admission">Admission</Link></li>
             <li><Link to="/mycollege">My College</Link></li>
@@ -24,8 +38,9 @@ const Navbar = () => {
             console.log(error);
         }
     };
+
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 shadow-2xl rounded-2xl p-2">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -35,25 +50,31 @@ const Navbar = () => {
                         {navItems}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case text-xl">College Booking</a>
+                <a className="btn btn-ghost normal-case lg:text-xl sm:text-sm">College Booking</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     {navItems}
                 </ul>
             </div>
-            {user ? <div className="navbar-end">
-                <li className="relative inline-block">
-                    <button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out mr-2">
-                        <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="" />
+            {user ? (
+                <div className="navbar-end">
+                    {userData && (
+                        <span className="text-slate-900 mr-2">
+                            Welcome, <Link to="/profile">{userData.name}</Link>
+                        </span>
+                    )}
+                    <button onClick={handleLogout} className="btn btn-neutral">
+                        Logout
                     </button>
-                </li>
-                <span className="text-slate-900 mr-2">Welcome, {user.displayName}</span>
-                <button onClick={handleLogout} className="btn btn-neutral">Logout</button>
-            </div>
-                : <div className="navbar-end">
-                    <button className="btn"><Link to="/login">Login</Link></button>
-                </div>}
+                </div>
+            ) : (
+                <div className="navbar-end">
+                    <button className="btn">
+                        <Link to="/login">Login</Link>
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -20,17 +20,17 @@ const Reviews = () => {
         <div key={index}>
             {admission.reviews.map((review, reviewIndex) => (
                 <div key={reviewIndex}>
-                    <p className="testimonial-text text-2xl text-violet-950 font-extrabold">{review.review}</p>
-                    <div className="d-flex justify-content-center">
+                    <p className="testimonial-text text-2xl text-slate-300 font-bold font-serif">{review.review}</p>
+                    <div className="d-flex justify-content-center my-4">
                         <img
                             src={admission.image}
                             className="rounded-circle img-fluid"
-                            style={{ maxWidth: "120px", maxHeight: "120px" }}
+                            style={{ maxWidth: "120px", maxHeight: "120px", borderRadius: "50%"  }}
                         />
                     </div>
-                    <h4 className="font-weight-bold text-black mt-2">{admission.candidateName}</h4>
+                    <h4 className="font-weight-bold text-xl text-white mt-5">{admission.candidateName}</h4>
                     <div>
-                        <p>Rating: {review.rating}</p>
+                        <p className="text-white my-8">Rating: {review.rating}</p>
                     </div>
                 </div>
             ))}
@@ -38,8 +38,8 @@ const Reviews = () => {
     ));
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-semibold mb-4 text-center">Reviews</h1>
+        <div className="container mx-auto p-10 ">
+            <h1 className="text-3xl font-semibold my-8 text-center text-white">Reviews</h1>
             {reviews.length > 0 ? (
                 <Carousel
                     showThumbs={false}

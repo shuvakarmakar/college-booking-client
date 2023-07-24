@@ -20,7 +20,7 @@ const SignUp = () => {
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        const saveUser = { name: data.name, email: data.email, image: data.photoURL }
+                        const saveUser = { name: data.name, email: data.email }
                         fetch('http://localhost:5000/user', {
                             method: 'POST',
                             headers: {
@@ -122,19 +122,6 @@ const SignUp = () => {
                                 className={`input input-bordered rounded-md ${errors.confirmPassword ? 'input-error' : ''}`}
                             />
                             {errors.confirmPassword && <span className="text-red-700">{errors.confirmPassword.message}</span>}
-                        </div>
-                        {/* Photo URL */}
-                        <div className="form-control mt-4">
-                            <label className="label">
-                                <span className="label-text">Photo URL</span>
-                            </label>
-                            <input
-                                type="text"
-                                {...register('photoURL', { required: 'Photo URL is required' })}
-                                placeholder="Photo URL"
-                                className={`input input-bordered rounded-md ${errors.photoURL ? 'input-error' : ''}`}
-                            />
-                            {errors.photoURL && <span className="text-red-700">{errors.photoURL.message}</span>}
                         </div>
                         <div className="form-control mt-6">
                             <input type="submit" className="btn btn-primary w-full" value="Sign Up" />

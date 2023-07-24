@@ -9,6 +9,7 @@ import Error from "../Pages/Error/Error";
 import Profile from "../Pages/Profile/Profile";
 import MyCollege from "../Pages/MyCollege/MyCollege";
 import CollegeDetails from "../Pages/Home/CollegeCards/CollegeDetails";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "mycollege",
-                element: <MyCollege></MyCollege>
+                element: <PrivateRoute><MyCollege></MyCollege></PrivateRoute>
             },
             {
                 path: "profile",

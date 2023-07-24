@@ -72,10 +72,8 @@ const Admission = () => {
             const responseData = await response.json();
 
             if (response.ok && responseData.success) {
-                // Get the uploaded image URL from the response data
                 const imageUrl = responseData.data.display_url;
 
-                // Submit the admission data along with the uploaded image URL
                 const {
                     candidateName,
                     subject,
@@ -99,7 +97,7 @@ const Admission = () => {
                             candidatePhone,
                             address,
                             dateOfBirth,
-                            image: imageUrl, // Use the uploaded image URL here
+                            image: imageUrl, 
                         }),
                     });
 
